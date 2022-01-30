@@ -1,0 +1,16 @@
+{% load dict_key %}
+<h3>here is the stock {{Stock|get_item:"companyName"}}</h3>
+<h3> current price {{Stock|get_item:"lastPrice"}}</h3>
+{{ room_name|json_script:"room-name"}}
+<script>
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+    const socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/stock/'+ '{{Stock|get_item:"symbol"}}/' + roomName + '/'
+        );
+    socket.onmessage = function(e){
+      console.log(e.data);
+    }
+    socket.onopen = function(e){
+      console.log('conn');
+    }
+</script>
