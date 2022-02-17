@@ -1,4 +1,5 @@
 from django import template
+from importlib_metadata import pass_none
 
 register = template.Library()
 

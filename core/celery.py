@@ -9,13 +9,13 @@ app = Celery('stockapp')
 app.conf.enable_utc = False
 app.conf.update(timezone='Asia/Kolkata')
 app.config_from_object(settings,namespace='CELERY')
-app.conf.beat_schedule ={
+# app.conf.beat_schedule ={
     # 'every-1-seconds':{
     #     'task':'stockapp.tasks.update_data',
     #     'schedule': 1,
     #     'args':('infy',),
     # },
-}
+# }
 
 app.autodiscover_tasks()
 @app.task(bind=True)
