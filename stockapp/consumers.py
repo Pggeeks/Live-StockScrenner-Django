@@ -1,17 +1,9 @@
 # chat/consumers.py
-from ast import Num, Pass, arg
-from contextlib import nullcontext
-from re import U
-from channels.layers import get_channel_layer
-from urllib.parse import parse_qs
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from asgiref.sync import AsyncToSync, sync_to_async , async_to_sync
-from django_celery_beat.models import PeriodicTask , IntervalSchedule
-from .models import  UsersCount
-import uuid
-from channels.exceptions import StopConsumer
-from nsetools import Nse
+# from .models import UsersCount
+# from asgiref import sync_to_async
+from .views import *
 class StockConsumer(AsyncWebsocketConsumer):
     # @sync_to_async
     # def Users_Count(self,group_name):
@@ -21,7 +13,6 @@ class StockConsumer(AsyncWebsocketConsumer):
         # u.Num_User += 1
         # u.save()
         # pass
-        
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         # self.room_group_name = 'stock_%s' % self.room_name
@@ -44,19 +35,22 @@ class StockConsumer(AsyncWebsocketConsumer):
             self.channel_name
         )
         await self.close()
+        Show_Details.Broken()
+        
 
     # Receive message from WebSocket
     async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        # text_data_json = json.loads(text_data)
+        # message = text_data_json['message']
+        print(text_data)
         # Send message to room group
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'stock_update',
-                'message': message
-            }
-        )
+        # await self.channel_layer.group_send(
+        #     self.room_group_name,
+        #     {
+        #         'type': 'stock_update',
+        #         'message': message
+        #     }
+        # )
 
     # Receive message from room group
     async def stock_update(self, event):

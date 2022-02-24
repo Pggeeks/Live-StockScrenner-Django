@@ -1,30 +1,26 @@
-from asyncio import tasks
-from concurrent.futures import thread
-import time
-from tokenize import Name
+from ast import Break, arg
+import re
 from asgiref.sync import async_to_sync
-from django.http import JsonResponse
-from django.shortcuts import render  , HttpResponse
-from django.template import context
-import queue
+from django.http import HttpResponse
+from django.shortcuts import render
+import schedule
+import time
 from threading import Thread
 import requests
 from nsetools import Nse
-import json
-from threading import Thread
-import schedule
+from threading import Thread , Event
 nse = Nse()
 from bs4 import BeautifulSoup
-from django.contrib.auth import get_user_model
 from channels.layers import get_channel_layer
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def Home(request):
     AllStocks= nse.get_stock_codes()
     return render(request,'stockapp/home.html',{'Stocks': AllStocks})
+
 class Show_Details(View):
     def get(self,request,*args,**kwargs):
+        global stop_event
         Name =self.kwargs['Name']
         nseQuote = nse.get_quote(Name)
         url = f"https://www.screener.in/company/{Name}/consolidated/"
@@ -32,29 +28,24 @@ class Show_Details(View):
         #'<div class="sub show-more-box about" style="flex-basis: 100px">'
         soup = BeautifulSoup(result,'lxml')
         Company_Descripton=soup.find('div', {'class':"sub show-more-box about"}).get_text()
-        print(nseQuote)
+        stop_event= Event() #for geting the current event
+        s=Thread(target=self.SendPrices,args=(Name,)) #make a thread to get prices
+        s.daemon=True
+        s.start()
         context = {
             'Stock':nseQuote,
             'company_description':Company_Descripton,
             'room_name': Name
         }
         return render(request,'stockapp/Show_Page.html',context=context)
-
-    ## FOR AJAX REQUEST SENDS STOCK DATA
-    def post(self,request,*args,**kwargs):
-        data=request.POST.get('data')
-        print(data)
-        s=Thread(target=self.SendPrices,args=(data,))
-        s.daemon=True
-        s.start()
-        return HttpResponse(data)
-        
+    def Broken():
+        stop_event.set() # stop the thread if websocket get disconnected 
     def SendPrices(self,data):
-        print('send')
-        channels_layer = get_channel_layer()
-        while True:
-            time.sleep(5)
+        while not stop_event.is_set():
+            time.sleep(10) 
+            channels_layer = get_channel_layer()
             nseQuote= nse.get_quote(data)
+            print(nseQuote)
             async_to_sync(channels_layer.group_send)(
             str(data),
                 {
