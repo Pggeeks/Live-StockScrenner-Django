@@ -1,18 +1,4 @@
 
-<head>
-<style class="darkreader darkreader--fallback" media="screen"></style>
-<style class="darkreader darkreader--text" media="screen"></style>
-<style class="darkreader darkreader--invert" media="screen">
-    .jfk-bubble.gtx-bubble,
-    .captcheck_answer_label>input+img,
-    span#closed_text>img[src^="https://www.gstatic.com/images/branding/googlelogo"],
-    span[data-href^="https://www.hcaptcha.com/"]>#icon,
-    #bit-notification-bar-iframe,
-    ::-webkit-calendar-picker-indicator {
-        filter: invert(100%) hue-rotate(180deg) contrast(90%) !important;
-    }
-</style>
-<style class="darkreader darkreader--inline" media="screen">
     [data-darkreader-inline-bgcolor] {
         background-color: var(--darkreader-inline-bgcolor) !important;
     }
@@ -64,17 +50,12 @@
     [data-darkreader-inline-stopcolor] {
         stop-color: var(--darkreader-inline-stopcolor) !important;
     }
-</style>
-<style class="darkreader darkreader--variables" media="screen">
     :root {
         --darkreader-neutral-background: #131516;
         --darkreader-neutral-text: #d8d4cf;
         --darkreader-selection-background: #004daa;
         --darkreader-selection-text: #e8e6e3;
     }
-</style>
-<style class="darkreader darkreader--root-vars" media="screen"></style>
-<style class="darkreader darkreader--user-agent" media="screen">
     html {
         background-color: #181a1b !important;
     }
@@ -147,15 +128,6 @@
         background-color: #004daa !important;
         color: #e8e6e3 !important;
     }
-</style>
-<meta charset="utf-8">
-<title>Crypo</title>
-<base href="/">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<meta name="darkreader" content="f7980a1ffe31462b98807b49a512f22f">
-<style class="darkreader darkreader--override" media="screen">
     .vimvixen-hint {
         background-color: #7b5300 !important;
         border-color: #d8b013 !important;
@@ -182,8 +154,6 @@
     embed[type="application/pdf"] {
         filter: invert(100%) contrast(90%);
     }
-</style>
-<style>
     @import url(//fonts.googleapis.com/css?family=Overpass:300,400,600,700&display=swap);
 
     :root {
@@ -272,8 +242,6 @@
         background: #fff;
         font-weight: 400;
     }
-</style>
-<style class="darkreader darkreader--cors" media="screen">
     :root {
         --bs-blue: #0d6efd;
         --bs-indigo: #6610f2;
@@ -360,10 +328,6 @@
         background: #fff;
         font-weight: 400;
     }
-</style>
-<style class="darkreader darkreader--sync" media="screen"></style>
-<link rel="stylesheet" href="styles.eaf4a794c4f7c4c78024.css" media="all" onload="this.media='all'">
-<style class="darkreader darkreader--cors" media="screen">
     :root {
         --bs-blue: #0d6efd;
         --bs-indigo: #6610f2;
@@ -18290,13 +18254,6 @@
             height: 91.4%
         }
     }
-</style>
-<style class="darkreader darkreader--sync" media="screen"></style><noscript>
-    <link rel="stylesheet" href="styles.eaf4a794c4f7c4c78024.css">
-</noscript>
-<style></style>
-<style class="darkreader darkreader--sync" media="screen"></style>
-<style>
     [_nghost-nuh-c2] {
         position: relative;
         display: block;
@@ -18449,8 +18406,6 @@
     [_nghost-nuh-c2] .carousel-dots[_ngcontent-nuh-c2] .carousel-dot-active[_ngcontent-nuh-c2] {
         background-color: #fff
     }
-</style>
-<style>
     .searchbar {
         display: flex;
         justify-content: center;

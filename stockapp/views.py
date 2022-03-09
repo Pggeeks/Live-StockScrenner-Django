@@ -1,55 +1,102 @@
+from datetime import datetime
+import uuid
+from django.views import View
+from channels.layers import get_channel_layer
+from bs4 import BeautifulSoup
 from ast import Break, arg
-import re
+
 from asgiref.sync import async_to_sync
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 import schedule
 import time
+import json
 from threading import Thread
 import requests
 from nsetools import Nse
-from threading import Thread , Event
+from threading import Thread, Event
 nse = Nse()
-from bs4 import BeautifulSoup
-from channels.layers import get_channel_layer
-from django.views import View
 # Create your views here.
-def Home(request):
-    AllStocks= nse.get_stock_codes()
-    return render(request,'stockapp/home.html',{'Stocks': AllStocks})
+
+
+class Home(View):
+    def get(self, request):
+        global stop_event
+        AllStocks = nse.get_stock_codes()
+        a = {"RELIANCE": "RELIANCE INDUSTRIES", "HDFCBANK": "HDFC BANK", "INFY": "INFOSYS",
+             "ICICIBANK": "ICICI BANK", "TCS": "TATA CONSULTANCY SERVICES", "LT": "LARSEN & TOUBRO LTD"}
+        j = []
+        for i in a:
+            nseQuote = nse.get_quote(i)
+            j.append(nseQuote)
+        Nifty50 = nse.get_index_quote("nifty 50")
+        NiftyBank = nse.get_index_quote("nifty Bank")
+        stop_event = Event()  # for geting the current event
+        # make a thread to get prices
+        s = Thread(target=self.SendPrices, args=(a,))
+        s.daemon = True
+        s.start()
+        return render(request, 'stockapp/home.html', {'AllStocks': AllStocks, 'Stocks': j})
+
+    def Broken():
+        print('ubk')
+        stop_event.set()  # stop the thread if websocket get disconnected
+
+    def SendPrices(self, data):
+        while not stop_event.is_set():
+            channels_layer = get_channel_layer()
+            NiftyBank = nse.get_index_quote("nifty bank")
+            Nifty50 = nse.get_index_quote("nifty 50")
+            for i in data:
+                nseQuote = nse.get_quote(i)
+                async_to_sync(channels_layer.group_send)(
+                    'Home',
+                    {
+                        'type': 'stock_update',
+                        'message': nseQuote,
+                        'niftyBank': NiftyBank,
+                        'nifty50': Nifty50
+                    }
+                )
+            time.sleep(5)
+
 
 class Show_Details(View):
-    def get(self,request,*args,**kwargs):
-        global stop_event
-        Name =self.kwargs['Name']
+    def get(self, request, *args, **kwargs):
+        global stopevent
+        Name = self.kwargs['Name']
         nseQuote = nse.get_quote(Name)
         url = f"https://www.screener.in/company/{Name}/consolidated/"
         result = requests.get(url).text
         #'<div class="sub show-more-box about" style="flex-basis: 100px">'
-        soup = BeautifulSoup(result,'lxml')
-        Company_Descripton=soup.find('div', {'class':"sub show-more-box about"}).get_text()
-        stop_event= Event() #for geting the current event
-        s=Thread(target=self.SendPrices,args=(Name,)) #make a thread to get prices
-        s.daemon=True
+        soup = BeautifulSoup(result, 'lxml')
+        Company_Descripton = soup.find(
+            'div', {'class': "sub show-more-box about"}).get_text()
+        stopevent = Event()  # for geting the current event
+        # make a thread to get prices
+        s = Thread(target=self.SendPrices, args=(Name,))
+        s.daemon = True
         s.start()
         context = {
-            'Stock':nseQuote,
-            'company_description':Company_Descripton,
+            'Stock': nseQuote,
+            'company_description': Company_Descripton,
             'room_name': Name
         }
-        return render(request,'stockapp/Show_Page.html',context=context)
+        return render(request, 'stockapp/Show_Page.html', context=context)
+
     def Broken():
-        stop_event.set() # stop the thread if websocket get disconnected 
-    def SendPrices(self,data):
-        while not stop_event.is_set():
-            time.sleep(10) 
+        stopevent.set()  # stop the thread if websocket get disconnected
+
+    def SendPrices(self, data):
+        while not stopevent.is_set():
             channels_layer = get_channel_layer()
-            nseQuote= nse.get_quote(data)
+            nseQuote = nse.get_quote(data)
             print(nseQuote)
             async_to_sync(channels_layer.group_send)(
-            str(data),
+                str(data),
                 {
-                'type': 'stock_update',
-                'message': nseQuote,
+                    'type': 'stock_update',
+                    'message': nseQuote,
                 }
             )
+            time.sleep(5)
