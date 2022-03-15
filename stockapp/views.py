@@ -25,10 +25,7 @@ class Home(View):
         AllStocks = nse.get_stock_codes()
         a = {"RELIANCE": "RELIANCE INDUSTRIES", "HDFCBANK": "HDFC BANK", "INFY": "INFOSYS",
              "ICICIBANK": "ICICI BANK", "TCS": "TATA CONSULTANCY SERVICES", "LT": "LARSEN & TOUBRO LTD"}
-        j = []
-        for i in a:
-            nseQuote = nse.get_quote(i)
-            j.append(nseQuote)
+        Data = [nse.get_quote(i) for i in a ]
         Nifty50 = nse.get_index_quote("nifty 50")
         NiftyBank = nse.get_index_quote("nifty Bank")
         stop_event = Event()  # for geting the current event
@@ -36,7 +33,7 @@ class Home(View):
         s = Thread(target=self.SendPrices, args=(a,))
         s.daemon = True
         s.start()
-        return render(request, 'stockapp/home.html', {'AllStocks': AllStocks, 'Stocks': j})
+        return render(request, 'stockapp/home.html', {'AllStocks': AllStocks, 'Stocks': Data})
 
     def Broken():
         print('ubk')
@@ -47,6 +44,7 @@ class Home(View):
             channels_layer = get_channel_layer()
             NiftyBank = nse.get_index_quote("nifty bank")
             Nifty50 = nse.get_index_quote("nifty 50")
+            start_time = datetime.now()
             for i in data:
                 nseQuote = nse.get_quote(i)
                 async_to_sync(channels_layer.group_send)(
@@ -58,7 +56,9 @@ class Home(View):
                         'nifty50': Nifty50
                     }
                 )
-            time.sleep(5)
+            end_time = datetime.now()
+            print('Duration: {}'.format(end_time - start_time))
+            time.sleep(1)
 
 
 class Show_Details(View):
@@ -99,4 +99,4 @@ class Show_Details(View):
                     'message': nseQuote,
                 }
             )
-            time.sleep(5)
+            time.sleep(1)

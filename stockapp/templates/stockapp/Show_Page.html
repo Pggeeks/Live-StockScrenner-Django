@@ -16,10 +16,11 @@
       <div class="card-header display-6">
           {{Stock|get_item:"companyName"}}
       </div>
+      <p class="m-0"> * Prices are updated every 30 seconds with ajax</p>
       <div class="card-body">
-  <span>
+        <span>
   <p class="card-title h3 " id="currentPrice" style="display:inline-block;">₹{{Stock|get_item:"lastPrice"}}</p>
-  <h6 id="change" style="display:inline-block;" class="m-md-2">{{Stock|get_item:"change"}}</h6>
+  <h6 id="change" style="display:inline-block;" class="m-md-2">{{Stock|get_item:"change"}}%</h6>
   </span>
   <p class="card-text h3">{{company_description}}</p>
   <a href="#" class="btn btn-primary">Chart</a>
@@ -36,28 +37,17 @@
     var changed = document.getElementById('change') 
     Cmp.innerHTML = '₹'+Data['lastPrice'] // add CMP from json obj
        
-    if ( Data['change'].toString().indexOf('-')===0) {
-    changed.innerHTML = Data['change'] // add change in price from json obj 
+    if ( Data['pChange'].toString().indexOf('-')===0) {
+    changed.innerHTML = Data['pChange']+'%' // add change in price from json obj 
     Cmp.classList.add('red');
     changed.classList.add('red');
     } else {
         Cmp.classList.add('green');
         changed.classList.add('green');
-        changed.innerHTML = '+' + Data['change'] // add plus icon if increase
+        changed.innerHTML = '+' + Data['pChange']+'%' // add plus icon if increase
     }
     
   }
-//   
-  socket.onerror= function(e){
-      alert('error')
-  }
-
-  socket.onopen = function (e) {
-      console.log('prb');
-  }
-  socket.addEventListener('close', function (event) {
-    alert('disconnected');
-});
 </script>
 <script>
   // reload on page back

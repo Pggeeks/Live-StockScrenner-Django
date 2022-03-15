@@ -2,6 +2,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
 {% load static %}
 <!--  css file main.css -->
 <link href="{% static 'css/main.css' %}" rel="stylesheet">   
@@ -114,18 +115,18 @@
     <!-- navbar ended -->
     <!-- bootstrap search bar -->
     <div class="searchbar" class="ui-widget">
-        <h4 id='searchtitle'>Search By Symbol or Name ..</h4>
+        <h4 id='searchtitle'>Search By Symbol or Name</h4>
         <nav class='searchnav' class="navbar navbar-light bg-light">
             <div class="container-fluid searchnav">
                 <form class="d-flex" action="">
                     <input class="form-control me-2" id="tags" type="text" placeholder=" Reliance Industries"
                         aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
         </nav>
     </div>
     <!--  -->
+    <p style="text-align: center; font-size: 0.8rem;"> * Prices are updated every 30 seconds with ajax</p>
     <!-- script for stock autocomplete -->
 
     <script>
@@ -163,39 +164,24 @@
 
     </script>
     <!-- ★ -->
-    <router-outlet _ngcontent-nuh-c31=""></router-outlet>
-    <app-markets _nghost-nuh-c19="">
-        <div _ngcontent-nuh-c19="" class="container-fluid">
-            <div _ngcontent-nuh-c19="" class="row">
-                <div _ngcontent-nuh-c19="" class="col-md-12">
-                    <app-market-carousel _ngcontent-nuh-c19="" _nghost-nuh-c17="">
-                        <carousel _ngcontent-nuh-c17="" _nghost-nuh-c2="" class="carousel" style="height: 285px;">
-                            <!---->
-                            <div _ngcontent-nuh-c2="" class="carousel-container">
-                                <div _ngcontent-nuh-c2="" class="carousel-cells" style="width: 3700px;">
-                                    <div _ngcontent-nuh-c17="" class="carousel-cell"
-                                        style="transform: translateX(0px); width: 350px;">
-                                        <div _ngcontent-nuh-c17="" class="market-carousel-item searchnav">
-                                            <div _ngcontent-nuh-c17="" class="market-carousel-item-name"><img
-                                                    _ngcontent-nuh-c17="" src="../../../assets/img/icon/1.png"
-                                                    alt=""><strong _ngcontent-nuh-c17="">Ethereum</strong></div>
-                                            <h2 _ngcontent-nuh-c17="">237394.06 ETH</h2>
-                                            <p _ngcontent-nuh-c17="">$12,000</p><a _ngcontent-nuh-c17=""
-                                                routerlink="/wallet" href="/wallet"><button _ngcontent-nuh-c17=""
-                                                    class="btn buy">Deposit</button></a><a _ngcontent-nuh-c17=""
-                                                routerlink="/wallet" href="/wallet"><button _ngcontent-nuh-c17=""
-                                                    class="btn sell">Withdraw</button></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </carousel>
-                    </app-market-carousel>
-                </div>
-            </div>
+    <!-- nifty and bank nifty cards -->
+    <div id="nifty-cards">
+        <div id="nifty-items" class="card border border-success mb-3">
+            <div class="card-body text-primary">
+                <h5 class="card-title green">Nifty 50</h5>
+          <p class="card-text green">₹17698</p>
+          <p id='nifty-change' class="card-text m-0 green">+121</p>
         </div>
-    </app-markets>
-</app-root>
+    </div>
+        <div id="nifty-items" class="card border border-success mb-3">
+            <div class="card-body text-primary">
+                <h5 class="card-title green">Nifty 50</h5>
+          <p class="card-text green">₹17698</p>
+          <p id='nifty-change' class="card-text m-0 green">+121</p>
+        </div>
+    </div>
+        
+    </div>
 <!-- ethereium above details -->
 <app-markets-list _ngcontent-nuh-c19="" _nghost-nuh-c18="">
     <div _ngcontent-nuh-c18="" class="markets pb70">
@@ -203,29 +189,7 @@
             <div _ngcontent-nuh-c18="" class="row">
                 <div _ngcontent-nuh-c18="" class="col-md-12">
                     <div _ngcontent-nuh-c18="" class="markets-pair-list">
-                        <ul _ngcontent-nuh-c18="" id="myTab" role="tablist" class="nav nav-tabs">
-                            <li _ngcontent-nuh-c18="" role="presentation" class="nav-item"><button
-                                    _ngcontent-nuh-c18="" id="favorites-id" data-bs-toggle="tab"
-                                    data-bs-target="#favorites" type="button" role="tab" aria-controls="favorites"
-                                    aria-selected="true" class="nav-link"> ★
-                                    Favorites </button></li>
-                            <li _ngcontent-nuh-c18="" role="presentation" class="nav-item"><button
-                                    _ngcontent-nuh-c18="" id="btc-id" data-bs-toggle="tab" data-bs-target="#btc"
-                                    type="button" role="tab" aria-controls="btc" aria-selected="false"
-                                    class="nav-link active"> BTC </button></li>
-                            <li _ngcontent-nuh-c18="" role="presentation" class="nav-item"><button
-                                    _ngcontent-nuh-c18="" id="kcs-id" data-bs-toggle="tab" data-bs-target="#kcs"
-                                    type="button" role="tab" aria-controls="kcs" aria-selected="false"
-                                    class="nav-link"> KCS </button></li>
-                            <li _ngcontent-nuh-c18="" role="presentation" class="nav-item"><button
-                                    _ngcontent-nuh-c18="" id="usdt-id" data-bs-toggle="tab" data-bs-target="#usdt"
-                                    type="button" role="tab" aria-controls="usdt" aria-selected="false"
-                                    class="nav-link"> USDT </button></li>
-                            <li _ngcontent-nuh-c18="" role="presentation" class="nav-item"><button
-                                    _ngcontent-nuh-c18="" id="alts-id" data-bs-toggle="tab" data-bs-target="#alts"
-                                    type="button" role="tab" aria-controls="alts" aria-selected="false"
-                                    class="nav-link"> ALTS </button></li>
-                        </ul>
+                       
                         <div _ngcontent-nuh-c18="" id="myTabContent" class="tab-content">
                             <div _ngcontent-nuh-c18="" id="favorites" role="tabpanel" aria-labelledby="favorites-id"
                                 class="tab-pane fade">
@@ -280,11 +244,13 @@
                                         <tr _ngcontent-nuh-c18="">
                                                 <td _ngcontent-nuh-c18=""><i _ngcontent-nuh-c18=""
                                                         class="icon ion-md-star"></i> {{i|get_item:'symbol'}}</td>
-                                                
-                    
-                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}">{{i|get_item:'lastPrice'}}</td>
-                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}change">{{i|get_item:'pChange'}}</td>
-                                
+                                                {% if '-' in i|get_item:'pChange' %}
+                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}" class="red">₹{{i|get_item:'lastPrice'}}</td>
+                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}change" class='red'>{{i|get_item:'pChange'}}%</td>
+                                                {% else %}
+                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}" class="green">₹{{i|get_item:'lastPrice'}}</td>
+                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}change" class='green'>+{{i|get_item:'pChange'}}%</td>
+                                                {% endif %}
                                                 <td _ngcontent-nuh-c18="">{{i|get_item:'dayHigh'}}</td>
                                                 <td _ngcontent-nuh-c18="">{{i|get_item:'dayLow'}}</td>
                                                 <td _ngcontent-nuh-c18="">{{i|get_item:'totalTradedVolume'}}</td>
@@ -292,7 +258,7 @@
                                             
                 
                                             {% endfor %}
-                                        </tbody>1
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

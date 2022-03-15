@@ -236,7 +236,7 @@
 
     body {
         font-family: Overpass, sans-serif;
-        font-size: 14px;
+        font-size: 1rem;
         line-height: 1.5;
         color: #18214d;
         background: #fff;
@@ -15861,7 +15861,7 @@
 
     body {
         font-family: Overpass, sans-serif;
-        font-size: 14px;
+        font-size: 1rem;
         line-height: 1.5;
         color: #18214d;
         background: #fff;
@@ -16056,13 +16056,13 @@
     }
 
     .page-content h2 {
-        font-size: 26px;
+        font-size: 1.5rem;
         margin-bottom: 20px;
         margin-top: 60px
     }
 
     .page-content p {
-        font-size: 16px
+        font-size: 1rem
     }
 
     .news-details {
@@ -17976,7 +17976,7 @@
     .searchoption {
         position: absolute;
         right: 0px;
-        font-size: 22px;
+        font-size: 1.2rem;
     }
 
     .dark-mode .wallet h2,
@@ -18288,7 +18288,7 @@
         right: 24px;
         border-radius: 13px;
         background-color: rgba(23, 37, 68, .3);
-        font-size: 11px;
+        font-size: 0.8rem;
         color: #fff;
         padding: 5px 7px;
         line-height: normal
@@ -18418,7 +18418,7 @@
 
     #searchtitle {
         color: black;
-        font-size: 28px;
+        font-size: 1.5rem;
         text-align: center;
         padding-right: 10px;
         padding-top: 5px;
@@ -18482,3 +18482,51 @@
         font-size: 22px;
 
     }
+    #nifty-cards{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+    .card-body{
+        padding: 0.5rem;
+    }
+    #nifty-change{
+        font-size: 0.8rem;
+    }
+    .card-text{
+        margin: 8px 6px 5px 3px;
+    }
+    #nifty-items{
+        max-width: 15rem;
+        min-width: 15rem;
+        box-shadow: 2px 2px 5px #aaaaaa; 
+    }
+    /* responsive by me aka pgeeks parth gujral */
+    
+    @media(max-width: 970px) {
+        .searchbar{
+            display: block;
+        }
+        
+        .me-2{
+            margin: 0 auto !important;
+            width: 50%;
+        }
+        
+        #searchtitle{
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        #nifty-items{
+            max-width: 8rem;
+            min-width: 8rem;
+            box-shadow: 2px 2px 5px #aaaaaa; 
+        }
+        .card-body{
+            padding: 0.5rem;
+        }
+        .card-text{
+            margin: 5px 5px 4px 0px;
+        }   
+    }
+    
