@@ -57,7 +57,10 @@
         --darkreader-selection-text: #e8e6e3;
     }
     html {
-        background-color: #181a1b !important;
+        background-color: #111 !important;
+        zoom: 110%;
+        
+        
     }
 
     html,
@@ -989,7 +992,9 @@
     }
 
     @media (min-width:576px) {
-
+        html{
+            zoom:105%
+        }
         .container,
         .container-sm {
             max-width: 540px
@@ -997,7 +1002,9 @@
     }
 
     @media (min-width:768px) {
-
+        html{
+            zoom: 105%;
+        }
         .container,
         .container-md,
         .container-sm {
@@ -7777,7 +7784,8 @@
     }
 
     .d-flex {
-        display: flex !important
+        display: flex !important;
+        margin:0px;
     }
 
     .d-inline-flex {
@@ -13017,9 +13025,6 @@
     .ion-md-speedometer:before,
     .ion-md-square-outline:before,
     .ion-md-square:before,
-    .ion-md-star-half:before,
-    .ion-md-star-outline:before,
-    .ion-md-star:before,
     .ion-md-stats:before,
     .ion-md-stopwatch:before,
     .ion-md-subway:before,
@@ -15683,21 +15688,6 @@
         content: ""
     }
 
-    .ion-md-star:before {
-        content: ""
-    }
-
-    .ion-md-star-half:before {
-        content: ""
-    }
-
-    .ion-md-star-outline:before {
-        content: ""
-    }
-
-    .ion-md-stats:before {
-        content: ""
-    }
 
     .ion-md-stopwatch:before {
         content: ""
@@ -15922,7 +15912,7 @@
 
     ::-webkit-scrollbar {
         background: #0000;
-        width: 3px;
+        width: 10px;
         height: 6px
     }
 
@@ -18501,6 +18491,21 @@
         min-width: 15rem;
         box-shadow: 2px 2px 5px #aaaaaa; 
     }
+    .navbar-brand{
+        font-family: Overpass, sans-serif !important ;
+        font-size: 1.9rem  ;
+    }
+    #nav-image{
+        height: 3rem;
+        width: 3.5rem;
+    }
+    #nav-title{
+        padding-left: 8px;
+        font-size: 1rem;
+    }
+    .col-md-12{
+        margin-bottom: 20px;
+    }
     /* responsive by me aka pgeeks parth gujral */
     
     @media(max-width: 970px) {
@@ -18527,6 +18532,18 @@
         }
         .card-text{
             margin: 5px 5px 4px 0px;
+        }
+        .navbar-brand{
+            font-family: Overpass, sans-serif !important ;
+            font-size: 1rem  ;
+        }
+        #nav-image{
+            height: 2rem;
+            width: 2.5rem;
         }   
     }
-    
+    @media(max-width: 500px){
+        html{
+            zoom:100%;
+        }
+    }

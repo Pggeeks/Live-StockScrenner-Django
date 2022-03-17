@@ -33,7 +33,7 @@ class Home(View):
         s = Thread(target=self.SendPrices, args=(a,))
         s.daemon = True
         s.start()
-        return render(request, 'stockapp/home.html', {'AllStocks': AllStocks, 'Stocks': Data})
+        return render(request, 'stockapp/home.html', {'AllStocks': AllStocks, 'Stocks': Data,'niftyBank': NiftyBank,'nifty50': Nifty50})
 
     def Broken():
         print('ubk')
