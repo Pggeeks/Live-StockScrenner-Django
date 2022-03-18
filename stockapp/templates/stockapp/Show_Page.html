@@ -15,7 +15,7 @@
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet"
     type="text/css" />
   </head>
-  <div class="card text-center">
+  <div class="card text-center" style="margin-bottom: 25px;">
       <div class="card-header display-6">
           {{Stock|get_item:"companyName"}}
       </div>
@@ -29,6 +29,8 @@
   <a href="#" class="btn btn-primary">Chart</a>
 </div>
 </div>
+{% include 'stockapp/footer.html' %} 
+</html>
 <!--  -->
 <script type="text/javascript">
   const socket = new WebSocket(

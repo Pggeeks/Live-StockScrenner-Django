@@ -37,7 +37,10 @@ class Home(View):
 
     def Broken():
         print('ubk')
+        # stop_event.clear()
         stop_event.set()  # stop the thread if websocket get disconnected
+    def clearevent():
+        stop_event.clear()
 
     def SendPrices(self, data):
         while not stop_event.is_set():
@@ -64,6 +67,7 @@ class Home(View):
 class Show_Details(View):
     def get(self, request, *args, **kwargs):
         global stopevent
+        print('hhhh')
         Name = self.kwargs['Name']
         nseQuote = nse.get_quote(Name)
         url = f"https://www.screener.in/company/{Name}/consolidated/"
@@ -85,8 +89,10 @@ class Show_Details(View):
         return render(request, 'stockapp/Show_Page.html', context=context)
 
     def Broken():
+        # stop_event.clear()
         stopevent.set()  # stop the thread if websocket get disconnected
-
+    def clearevent():
+        stopevent.clear()
     def SendPrices(self, data):
         while not stopevent.is_set():
             channels_layer = get_channel_layer()

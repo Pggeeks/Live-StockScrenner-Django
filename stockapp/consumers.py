@@ -15,6 +15,7 @@ class StockConsumer(AsyncWebsocketConsumer):
         )
         ## creating a celery beat task
         await self.accept()
+        Show_Details.clearevent()
         # await self.Users_Count(self.room_group_name)
 
     async def disconnect(self, close_code):
@@ -73,6 +74,7 @@ class AllStockConsumer(AsyncWebsocketConsumer):
         )
         ## creating a celery beat task
         await self.accept()
+        Home.clearevent()
         print('conn')
         # await self.Users_Count(self.room_group_name)
 
