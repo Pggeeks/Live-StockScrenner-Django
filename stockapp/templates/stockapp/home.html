@@ -9,7 +9,8 @@
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 {% load static %}
 <!--  css file main.css -->
-<link href="{% static 'css/main.css' %}" rel="stylesheet">   
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+<script src="{% static 'js/home.js' %}">  </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
 </script>
@@ -20,200 +21,206 @@
 </head>
 
 <body class="light-mode">
-<app-root _nghost-nuh-c31="" ng-version="12.2.2">
-    <app-header _ngcontent-nuh-c31="" _nghost-nuh-c30="">
-        <header _ngcontent-nuh-c30="" class="light-bb">
-            <nav id='top-nav' class="navbar navbar-light bg-light">
-                <div class="container-fluid">
-                  <div style="display: flex; align-items: center;">
-                    <img src="{% static 'images/sto.png' %}" alt="" id="nav-image" class="d-inline-block align-text-top">
-                    <span id="nav-title">Stock Screnner Live</span>
+    <app-root _nghost-nuh-c31="" ng-version="12.2.2">
+        <app-header _ngcontent-nuh-c31="" _nghost-nuh-c30="">
+            <header _ngcontent-nuh-c30="" class="light-bb">
+                <nav id='top-nav' class="navbar navbar-light bg-light">
+                    <div class="container-fluid">
+                        <div style="display: flex; align-items: center;">
+                            <img src="{% static 'images/sto.png' %}" alt="" id="nav-image"
+                                class="d-inline-block align-text-top">
+                            <span id="nav-title">Stock Screnner Live</span>
+                        </div>
                     </div>
+                </nav>
+            </header>
+        </app-header>
+        <!-- navbar ended -->
+        <!-- bootstrap search bar -->
+        <div class="searchbar" class="ui-widget">
+            <h4 id='searchtitle'>Search By Symbol or Name</h4>
+            <nav class='searchnav' class="navbar navbar-light bg-light">
+                <div class="container-fluid searchnav">
+                    <form class="d-flex" action="">
+                        <input class="form-control me-2" id="tags" type="text" placeholder=" Reliance Industries"
+                            aria-label="Search">
+                    </form>
                 </div>
-              </nav>
-                </header>
-    </app-header>
-    <!-- navbar ended -->
-    <!-- bootstrap search bar -->
-    <div class="searchbar" class="ui-widget">
-        <h4 id='searchtitle'>Search By Symbol or Name</h4>
-        <nav class='searchnav' class="navbar navbar-light bg-light">
-            <div class="container-fluid searchnav">
-                <form class="d-flex" action="">
-                    <input class="form-control me-2" id="tags" type="text" placeholder=" Reliance Industries"
-                        aria-label="Search">
-                </form>
-            </div>
-        </nav>
-    </div>
-    <!--  -->
-    <p style="text-align: center; font-size: 0.8rem;"> * Prices are updated every 30 seconds with ajax</p>
-    <!-- script for stock autocomplete -->
+            </nav>
+        </div>
+        <!--  -->
+        <p style="text-align: center; font-size: 0.8rem;"> * Prices are updated every 15 seconds with websockets</p>
+        <!-- script for stock autocomplete -->
 
-    <script>
-        $(function () {
-            var availableTags = [
-                {% for Stock in AllStocks %}
+        <script>
+            $(function () {
+                var availableTags = [
+                    {% for Stock in AllStocks %}
         {% if Stock != 'SYMBOL' %}
-        "{{Stock}}",
-            {% endif %}
-        {% endfor %}
+            "{{Stock}}",
+                {% endif %}
+            {% endfor %}
 ];
-        $("#tags").autocomplete({
-            source: availableTags,
-            selectFirst: true,
-            minLength: 2,
-            open: function () {
-                setTimeout(function () {
-                    $('.ui-autocomplete').css('z-index', 1000000);
-                    // 
-                    // 
-                });
+            $("#tags").autocomplete({
+                source: availableTags,
+                selectFirst: true,
+                minLength: 2,
+                open: function () {
+                    setTimeout(function () {
+                        $('.ui-autocomplete').css('z-index', 1000000);
+                        // 
+                        // 
+                    });
 
 
 
 
-                $(".ui-autocomplete li").click(function () {
-                    var name = ($(this).text()); // gets text contents of clicked li    
-                    window.location.href = `stock/${name}`
-                });
-                
-            }
+                    $(".ui-autocomplete li").click(function () {
+                        var name = ($(this).text()); // gets text contents of clicked li    
+                        window.location.href = `stock/${name}`
+                    });
 
-        });
+                }
+
+            });
 } );
 
-    </script>
-    <!-- ★ -->
-    <!-- nifty and bank nifty cards -->
+        </script>
+        <!-- ★ -->
+        <!-- nifty and bank nifty cards -->
 
-    <div id="nifty-cards">
-        <div id="nifty-items" class="card border border-success mb-3">
-            <div class="card-body text-primary">
-                <h5 class="card-title green">{{niftyBank.name}}</h5>
-          <p class="card-text green">₹{{niftyBank.lastPrice}}</p>
-          {% if '-' in niftyBank.change %}
-          <p id='nifty-change' class="card-text m-0 red">{{niftyBank.change}}</p>
-          {% else %}
-          <p id='nifty-change' class="card-text m-0 green">+{{niftyBank.change}}</p>
-          {% endif %}  
-        </div>
-    </div>
-        <div id="nifty-items" class="card border border-success mb-3">
-            <div class="card-body text-primary">
-                <h5 class="card-title green">{{nifty50.name}}</h5>
-          <p class="card-text green">₹{{nifty50.lastPrice}}</p>
-          {% if '-' in nifty50.change %}
-          <p id='nifty-change' class="card-text m-0 red">{{nifty50.change}}</p>
-          {% else %}
-          <p id='nifty-change' class="card-text m-0 green">+{{nifty50.change}}</p>
-          {% endif %}  
-        </div>
-    </div>
-        
-    </div>
-<!-- ethereium above details -->
-<app-markets-list _ngcontent-nuh-c19="" _nghost-nuh-c18="">
-    <div _ngcontent-nuh-c18="" class="markets pb30">
-        <div _ngcontent-nuh-c18="" class="container-fluid">
-            <div _ngcontent-nuh-c18="" class="row">
-                <div _ngcontent-nuh-c18="" class="col-md-12">
-                    <div _ngcontent-nuh-c18="" class="markets-pair-list">
-                       
-                        <div _ngcontent-nuh-c18="" id="myTabContent" class="tab-content">
-                            <div _ngcontent-nuh-c18="" id="favorites" role="tabpanel" aria-labelledby="favorites-id"
-                                class="tab-pane fade">
-                                <div _ngcontent-nuh-c18="" class="table-responsive">
-                                    <table _ngcontent-nuh-c18="" class="table star-active">
-                                        <thead _ngcontent-nuh-c18="">
-                                            <tr _ngcontent-nuh-c18="">
-                                                <th _ngcontent-nuh-c18="">Pairs</th>
-                                                <th _ngcontent-nuh-c18="">Coin</th>
-                                                <th _ngcontent-nuh-c18="">Last Price</th>
-                                                <th _ngcontent-nuh-c18="">Change (24H)</th>
-                                                <th _ngcontent-nuh-c18="">High (24H)</th>
-                                                <th _ngcontent-nuh-c18="">Low (24h)</th>
-                                                <th _ngcontent-nuh-c18="">Volume (24h)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody _ngcontent-nuh-c18="">
-                                            <tr _ngcontent-nuh-c18="">
-                                                <td _ngcontent-nuh-c18=""><i _ngcontent-nuh-c18=""
-                                                        class="icon ion-md-star"></i> ETH/BTC</td>
-                                                <td _ngcontent-nuh-c18=""><img _ngcontent-nuh-c18=""
-                                                        src="../../../assets/img/icon/1.png" alt="eth"> ETH
-                                                </td>
-                                                <td _ngcontent-nuh-c18="">7394.06</td>
-                                                <td _ngcontent-nuh-c18="" class="green">+0.78%</td>
-                                                <td _ngcontent-nuh-c18="">7444.91</td>
-                                                <td _ngcontent-nuh-c18="">7267.06</td>
-                                                <td _ngcontent-nuh-c18="">431,687,258.77</td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div _ngcontent-nuh-c18="" id="btc" role="tabpanel" aria-labelledby="btc-id"
-                                class="tab-pane fade show active">
-                                <div _ngcontent-nuh-c18="" class="table-responsive">
-                                    <table _ngcontent-nuh-c18="" class="table">
-                                        <thead _ngcontent-nuh-c18="">
-                                            <tr _ngcontent-nuh-c18="">
-                                                <th _ngcontent-nuh-c18="">Pairs</th>
-                                                <th _ngcontent-nuh-c18="">Last Price</th>
-                                                <th _ngcontent-nuh-c18="">Change (24H)</th>
-                                                <th _ngcontent-nuh-c18="">High (24H)</th>
-                                                <th _ngcontent-nuh-c18="">Low (24h)</th>
-                                                <th _ngcontent-nuh-c18="">Volume (24h)</th>
-                                            </tr>
-                                        </thead>
-
-                                        {% for i in Stocks %}
-
-                                        <tr _ngcontent-nuh-c18="">
-                                                <td _ngcontent-nuh-c18=""><i _ngcontent-nuh-c18=""
-                                                        class="icon ion-md-star"></i> {{i|get_item:'symbol'}}</td>
-                                                {% if '-' in i|get_item:'pChange' %}
-                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}" class="red">₹{{i|get_item:'lastPrice'}}</td>
-                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}change" class='red'>{{i|get_item:'pChange'}}%</td>
-                                                {% else %}
-                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}" class="green">₹{{i|get_item:'lastPrice'}}</td>
-                                                <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}change" class='green'>+{{i|get_item:'pChange'}}%</td>
-                                                {% endif %}
-                                                <td _ngcontent-nuh-c18="">{{i|get_item:'dayHigh'}}</td>
-                                                <td _ngcontent-nuh-c18="">{{i|get_item:'dayLow'}}</td>
-                                                <td _ngcontent-nuh-c18="">{{i|get_item:'totalTradedVolume'}}</td>
-                                            </tr>
-                                            
-                
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+        <div id="nifty-cards">
+            <div id="nifty-items" class="card border border-success mb-3">
+                <div class="card-body text-primary">
+                    <h5 class="card-title green">{{niftyBank.name}}</h5>
+                    <p class="card-text green">₹{{niftyBank.lastPrice}}</p>
+                    {% if '-' in niftyBank.change %}
+                    <p id='nifty-change' class="card-text m-0 red">{{niftyBank.change}}</p>
+                    {% else %}
+                    <p id='nifty-change' class="card-text m-0 green">+{{niftyBank.change}}</p>
+                    {% endif %}
                 </div>
             </div>
+            <div id="nifty-items" class="card border border-success mb-3">
+                <div class="card-body text-primary">
+                    <h5 class="card-title green">{{nifty50.name}}</h5>
+                    <p class="card-text green">₹{{nifty50.lastPrice}}</p>
+                    {% if '-' in nifty50.change %}
+                    <p id='nifty-change' class="card-text m-0 red">{{nifty50.change}}</p>
+                    {% else %}
+                    <p id='nifty-change' class="card-text m-0 green">+{{nifty50.change}}</p>
+                    {% endif %}
+                </div>
+            </div>
+
         </div>
-        <input type="hidden" id="refreshed" value="no"> 
-</app-markets-list>
-</app-markets>
+        <!-- ethereium above details -->
+        <app-markets-list _ngcontent-nuh-c19="" _nghost-nuh-c18="">
+            <div _ngcontent-nuh-c18="" class="markets pb30">
+                <div _ngcontent-nuh-c18="" class="container-fluid">
+                    <div _ngcontent-nuh-c18="" class="row">
+                        <div _ngcontent-nuh-c18="" class="col-md-12">
+                            <div _ngcontent-nuh-c18="" class="markets-pair-list">
 
-<!---->
-</app-root>
-<script src="runtime.7855c3947dcbda023611.js" defer=""></script>
-<script src="polyfills.3eee805b0d63b0c84029.js" defer=""></script>
-<script src="main.6803360a95acc17d6c60.js" defer=""></script>
+                                <div _ngcontent-nuh-c18="" id="myTabContent" class="tab-content">
+                                    <div _ngcontent-nuh-c18="" id="favorites" role="tabpanel"
+                                        aria-labelledby="favorites-id" class="tab-pane fade">
+                                        <div _ngcontent-nuh-c18="" class="table-responsive">
+                                            <table _ngcontent-nuh-c18="" class="table star-active">
+                                                <thead _ngcontent-nuh-c18="">
+                                                    <tr _ngcontent-nuh-c18="">
+                                                        <th _ngcontent-nuh-c18="">Pairs</th>
+                                                        <th _ngcontent-nuh-c18="">Coin</th>
+                                                        <th _ngcontent-nuh-c18="">Last Price</th>
+                                                        <th _ngcontent-nuh-c18="">Change (24H)</th>
+                                                        <th _ngcontent-nuh-c18="">High (24H)</th>
+                                                        <th _ngcontent-nuh-c18="">Low (24h)</th>
+                                                        <th _ngcontent-nuh-c18="">Volume (24h)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody _ngcontent-nuh-c18="">
+                                                    <tr _ngcontent-nuh-c18="">
+                                                        <td _ngcontent-nuh-c18=""><i _ngcontent-nuh-c18=""
+                                                                class="icon ion-md-star"></i> ETH/BTC</td>
+                                                        <td _ngcontent-nuh-c18=""><img _ngcontent-nuh-c18=""
+                                                                src="../../../assets/img/icon/1.png" alt="eth"> ETH
+                                                        </td>
+                                                        <td _ngcontent-nuh-c18="">7394.06</td>
+                                                        <td _ngcontent-nuh-c18="" class="green">+0.78%</td>
+                                                        <td _ngcontent-nuh-c18="">7444.91</td>
+                                                        <td _ngcontent-nuh-c18="">7267.06</td>
+                                                        <td _ngcontent-nuh-c18="">431,687,258.77</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div _ngcontent-nuh-c18="" id="btc" role="tabpanel" aria-labelledby="btc-id"
+                                        class="tab-pane fade show active">
+                                        <div _ngcontent-nuh-c18="" class="table-responsive">
+                                            <table _ngcontent-nuh-c18="" class="table">
+                                                <thead _ngcontent-nuh-c18="">
+                                                    <tr _ngcontent-nuh-c18="">
+                                                        <th _ngcontent-nuh-c18="">Pairs</th>
+                                                        <th _ngcontent-nuh-c18="">Last Price</th>
+                                                        <th _ngcontent-nuh-c18="">Change (24H)</th>
+                                                        <th _ngcontent-nuh-c18="">High (24H)</th>
+                                                        <th _ngcontent-nuh-c18="">Low (24h)</th>
+                                                        <th _ngcontent-nuh-c18="">Volume (24h)</th>
+                                                    </tr>
+                                                </thead>
+
+                                                {% for i in Stocks %}
+
+                                                <tr _ngcontent-nuh-c18="">
+                                                    <td _ngcontent-nuh-c18=""><i _ngcontent-nuh-c18=""
+                                                            class="icon ion-md-star"></i> <a style="color: black;" href="stock/{{i|get_item:'symbol'}}">{{i|get_item:'symbol'}}</a></td>
+                                                    {% if '-' in i|get_item:'pChange' %}
+                                                    <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}" class="red">
+                                                        ₹{{i|get_item:'lastPrice'}}</td>
+                                                    <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}change"
+                                                        class='red'>{{i|get_item:'pChange'}}%</td>
+                                                    {% else %}
+                                                    <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}"
+                                                        class="green">₹{{i|get_item:'lastPrice'}}</td>
+                                                    <td _ngcontent-nuh-c18="" id="{{i|get_item:'symbol'}}change"
+                                                        class='green'>+{{i|get_item:'pChange'}}%</td>
+                                                    {% endif %}
+                                                    <td _ngcontent-nuh-c18="">{{i|get_item:'dayHigh'}}</td>
+                                                    <td _ngcontent-nuh-c18="">{{i|get_item:'dayLow'}}</td>
+                                                    <td _ngcontent-nuh-c18="">{{i|get_item:'totalTradedVolume'}}</td>
+                                                </tr>
+
+
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="refreshed" value="no">
+        </app-markets-list>
+        </app-markets>
+
+        <!---->
+    </app-root>
+    <script src="runtime.7855c3947dcbda023611.js" defer=""></script>
+    <script src="polyfills.3eee805b0d63b0c84029.js" defer=""></script>
+    <script src="main.6803360a95acc17d6c60.js" defer=""></script>
 
 
 
-<!-- home.js contain socket connection -->
-<script src="{% static 'js/home.js' %}" type="text/javascript"></script> 
+    <!-- home.js contain socket connection -->
 </body>
+
 <hr>
 <!-- Footer here!! -->
-{% include 'stockapp/footer.html' %} 
+{% include 'stockapp/footer.html' %}
+
 </html>

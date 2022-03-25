@@ -1,4 +1,3 @@
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -8,65 +7,72 @@
 {% load dict_key %}
 {% load static %}
 <!-- css file main.css -->
-<link href="{% static 'css/main.css' %}" rel="stylesheet">   
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@1,200&display=swap" rel="stylesheet">
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet"
-    type="text/css" />
-  </head>
-  <div class="card text-center" style="margin-bottom: 25px;">
-      <div class="card-header display-6">
-          {{Stock|get_item:"companyName"}}
-      </div>
-      <p class="m-0"> * Prices are updated every 30 seconds with ajax</p>
-      <div class="card-body">
-        <span>
-  <p class="card-title h3 " id="currentPrice" style="display:inline-block;">₹{{Stock|get_item:"lastPrice"}}</p>
-  <h6 id="change" style="display:inline-block;" class="m-md-2">{{Stock|get_item:"change"}}%</h6>
-  </span>
-  <p class="card-text h3">{{company_description}}</p>
-  <a href="#" class="btn btn-primary">Chart</a>
+  type="text/css" />
+</head>
+<div class="card text-center" style="margin-bottom: 25px;">
+  <div class="card-header display-6">
+    {{Stock|get_item:"companyName"}}
+  </div>
+  <p class="m-0"> * Prices are updated every 15 seconds with ajax</p>
+  <div class="card-body">
+    <span>
+      {% if '-' in Stock|get_item:"change" %}
+      <p class="red card-title h3 " id="currentPrice" style="display:inline-block;">₹{{Stock|get_item:"lastPrice"}}</p>
+      <h6 id="change" style="display:inline-block;" class=" red m-md-2">{{Stock|get_item:"change"}}%</h6>
+      {% else %}
+      <p class="green card-title h3 " id="currentPrice" style="display:inline-block;">₹{{Stock|get_item:"lastPrice"}}</p>
+      <h6 id="change" style="display:inline-block;" class="green m-md-2">+{{Stock|get_item:"change"}}%</h6>
+      {% endif %}
+
+    </span>
+    <p class="card-text h3">{{company_description}}</p>
+    <a href="#" class="btn btn-primary">Chart</a>
+  </div>
 </div>
-</div>
-{% include 'stockapp/footer.html' %} 
+{% include 'stockapp/footer.html' %}
+
 </html>
 <!--  -->
-<script type="text/javascript">
+<script type="text/javascript" nonce={{request.csp_nonce}}>
   const socket = new WebSocket(
     'ws://' + window.location.host + '/ws/stock/' + '{{Stock|get_item:"symbol"}}/' + '{{room_name}}' + '/'
   );
   socket.onmessage = function (e) {
-    Data=JSON.parse(e.data) // get json object from backend (wesockets)
+    Data = JSON.parse(e.data) // get json object from backend (wesockets)
     var Cmp = document.getElementById('currentPrice')
-    var changed = document.getElementById('change') 
-    Cmp.innerHTML = '₹'+Data['lastPrice'] // add CMP from json obj
-       
-    if ( Data['pChange'].toString().indexOf('-')===0) {
-    changed.innerHTML = Data['pChange']+'%' // add change in price from json obj 
-    Cmp.classList.add('red');
-    changed.classList.add('red');
+    var changed = document.getElementById('change')
+    Cmp.innerHTML = '₹' + Data['lastPrice'] // add CMP from json obj
+
+    if (Data['pChange'].toString().indexOf('-') === 0) {
+      changed.innerHTML = Data['pChange'] + '%' // add change in price from json obj 
+      Cmp.classList.add('red');
+      changed.classList.add('red');
     } else {
-        Cmp.classList.add('green');
-        changed.classList.add('green');
-        changed.innerHTML = '+' + Data['pChange']+'%' // add plus icon if increase
+      Cmp.classList.add('green');
+      changed.classList.add('green');
+      changed.innerHTML = '+' + Data['pChange'] + '%' // add plus icon if increase
     }
-    
+
   }
 </script>
-<script>
+<script nonce={{request.csp_nonce}}>
   // reload on page back
-      window.addEventListener( "pageshow", function ( event ) {
-var historyTraversal = event.persisted || 
-                       ( typeof window.performance != "undefined" && 
-                            window.performance.navigation.type === 2 );
-if ( historyTraversal ) {
-  // Handle page restore.
-  window.location.reload();
-}
-});
-// disable page forword
-$( document ).ready( function(){
-  history.pushState(null,  document.title, location.href);        
- });
+  window.addEventListener("pageshow", function (event) {
+    var historyTraversal = event.persisted ||
+      (typeof window.performance != "undefined" &&
+        window.performance.navigation.type === 2);
+    if (historyTraversal) {
+      // Handle page restore.
+      window.location.reload();
+    }
+  });
+  // disable page forword
+  $(document).ready(function () {
+    history.pushState(null, document.title, location.href);
+  });
 </script>

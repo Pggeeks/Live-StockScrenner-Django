@@ -24,8 +24,9 @@ SECRET_KEY = 'django-insecure-x&du6g7=+f(6_d%$q0-yf8tai@%*uz*#$-(ciwgdp_cy7r*5f#
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+#  the app is full production ready
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'stockapp',
     'django_celery_results',
     'django.contrib.admin',
+    'whitenoise.runserver_nostatic',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -73,17 +76,22 @@ TEMPLATES = [
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1',6379)],
-            "capacity": 1500,  # default 100
-            "expiry": 10, 
-        },
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
     },
 }
+# if you havr redis use this settings 
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1',6379)],
+#             "capacity": 1500,  # default 100
+#             "expiry": 10, 
+#         },
+#     },
+# }
 # Database 
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 
 DATABASES = {
 'default': {
@@ -131,18 +139,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+import os
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CELERY_BROKER_URL = 'redis://localhost:6379/'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_RESULT_SERIALIZER='json'
-CELERY_TASK_SERIALIZER ='json'
-CELERY_TIMEZONE = 'Asia/Kolkata'
-CELERY_RESULTS_BACKEND = 'stockscrenner-db'
 # CELERY_BEAT_SCHEDULER = 'django_celery_beat.scheduler:DatabaseScheduler'
 
 

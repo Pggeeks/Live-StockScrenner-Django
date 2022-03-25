@@ -1,22 +1,15 @@
-from datetime import datetime
-import uuid
-from django.views import View
-from channels.layers import get_channel_layer
-from bs4 import BeautifulSoup
-from ast import Break, arg
-
-from asgiref.sync import async_to_sync
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
-import schedule
 import time
-import json
-from threading import Thread
+from threading import Event, Thread
+
 import requests
+from asgiref.sync import async_to_sync
+from bs4 import BeautifulSoup
+from channels.layers import get_channel_layer
+from django.shortcuts import render
+from django.views import View
 from nsetools import Nse
-from threading import Thread, Event
+
 nse = Nse()
-# Create your views here.
 
 
 class Home(View):
@@ -25,7 +18,7 @@ class Home(View):
         AllStocks = nse.get_stock_codes()
         a = {"RELIANCE": "RELIANCE INDUSTRIES", "HDFCBANK": "HDFC BANK", "INFY": "INFOSYS",
              "ICICIBANK": "ICICI BANK", "TCS": "TATA CONSULTANCY SERVICES", "LT": "LARSEN & TOUBRO LTD"}
-        Data = [nse.get_quote(i) for i in a ]
+        Data = [nse.get_quote(i) for i in a]
         Nifty50 = nse.get_index_quote("nifty 50")
         NiftyBank = nse.get_index_quote("nifty Bank")
         stop_event = Event()  # for geting the current event
@@ -33,12 +26,12 @@ class Home(View):
         s = Thread(target=self.SendPrices, args=(a,))
         s.daemon = True
         s.start()
-        return render(request, 'stockapp/home.html', {'AllStocks': AllStocks, 'Stocks': Data,'niftyBank': NiftyBank,'nifty50': Nifty50})
+        return render(request, 'stockapp/home.html', {'AllStocks': AllStocks, 'Stocks': Data, 'niftyBank': NiftyBank, 'nifty50': Nifty50})
 
     def Broken():
-        print('ubk')
         # stop_event.clear()
         stop_event.set()  # stop the thread if websocket get disconnected
+
     def clearevent():
         stop_event.clear()
 
@@ -47,7 +40,6 @@ class Home(View):
             channels_layer = get_channel_layer()
             NiftyBank = nse.get_index_quote("nifty bank")
             Nifty50 = nse.get_index_quote("nifty 50")
-            start_time = datetime.now()
             for i in data:
                 nseQuote = nse.get_quote(i)
                 async_to_sync(channels_layer.group_send)(
@@ -59,15 +51,12 @@ class Home(View):
                         'nifty50': Nifty50
                     }
                 )
-            end_time = datetime.now()
-            print('Duration: {}'.format(end_time - start_time))
-            time.sleep(1)
+            time.sleep(7)
 
 
 class Show_Details(View):
     def get(self, request, *args, **kwargs):
         global stopevent
-        print('hhhh')
         Name = self.kwargs['Name']
         nseQuote = nse.get_quote(Name)
         url = f"https://www.screener.in/company/{Name}/consolidated/"
@@ -91,18 +80,19 @@ class Show_Details(View):
     def Broken():
         # stop_event.clear()
         stopevent.set()  # stop the thread if websocket get disconnected
+
     def clearevent():
         stopevent.clear()
+
     def SendPrices(self, data):
         while not stopevent.is_set():
             channels_layer = get_channel_layer()
             nseQuote = nse.get_quote(data)
-            print(nseQuote)
             async_to_sync(channels_layer.group_send)(
-                str(data),
+                str(data).upper(),
                 {
                     'type': 'stock_update',
                     'message': nseQuote,
                 }
             )
-            time.sleep(1)
+            time.sleep(7)
