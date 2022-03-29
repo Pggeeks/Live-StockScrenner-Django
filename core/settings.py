@@ -21,11 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-x&du6g7=+f(6_d%$q0-yf8tai@%*uz*#$-(ciwgdp_cy7r*5f#'
-os.environ['SECRET_KEY']
+SECRET_KEY = 'django-insecure-x&du6g7=+f(6_d%$q0-yf8tai@%*uz*#$-(ciwgdp_cy7r*5f#'
+# SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 #  the app is full production ready
 
 ALLOWED_HOSTS = ['*']
@@ -93,16 +93,16 @@ CHANNEL_LAYERS = {
 # Database 
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.postgresql_psycopg2',
-'NAME': os.environ['db_name'],
-'USER': os.environ['db_user'],
-'PASSWORD': os.environ['db_password'],
-'HOST': os.environ['db_host'],
-'PORT': 5432
-}
-}
+# DATABASES = {
+# 'default': {
+# 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+# 'NAME': os.environ['db_name'],
+# 'USER': os.environ['db_user'],
+# 'PASSWORD': os.environ['db_password'],
+# 'HOST': os.environ['db_host'],
+# 'PORT': 5432
+# }
+# }
 
 
 

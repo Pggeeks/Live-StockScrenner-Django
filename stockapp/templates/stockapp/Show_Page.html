@@ -38,7 +38,7 @@
 
 </html>
 <!--  -->
-<script type="text/javascript" nonce={{request.csp_nonce}}>
+<script type="text/javascript">
   const socket = new WebSocket(
     'ws://' + window.location.host + '/ws/stock/' + '{{Stock|get_item:"symbol"}}/' + '{{room_name}}' + '/'
   );
