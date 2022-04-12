@@ -1,169 +1,157 @@
-<!DOCTYPE html>
-<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style media="screen">
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style media="screen">
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    body {
+        background: #fcfcfc;
+        font-family: sans-serif;
+    }
 
-        body {
-            background: #fcfcfc;
-            font-family: sans-serif;
-        }
+    footer {
+        background: #111;
+        width: 100%;
+        margin: auto;
+        padding-top: 10px;
+        color: #fff;
+        position: absolute;
+        font-family: Overpass, sans-serif;
+    }
 
-        footer {
-            background: #111;
-            /* margin: 0px !important; */
-            margin: auto;
-            padding-top: 10px;
-            color: #fff;
-            position: relative;
-            clear: both;
-            bottom: -50px;
-            font-family: Overpass, sans-serif;
-        }
+    .footer-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
 
-        .footer-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-        }
+    .footer-content h3 {
+        font-size: 1.2rem;
+        font-weight: 500;
+        text-transform: capitalize;
+        line-height: 3rem;
+    }
 
-        .footer-content h3 {
-            font-size: 1.2rem;
-            font-weight: 500;
-            text-transform: capitalize;
-            line-height: 3rem;
-        }
+    .footer-content p {
+        max-width: 700px;
+        line-height: 28px;
+        font-size: 0.7rem;
+        color: #cacdd2;
+    }
 
-        .footer-content p {
-            max-width: 700px;
-            line-height: 28px;
-            font-size: 0.7rem;
-            color: #cacdd2;
-        }
+    .socials {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .socials {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .socials li {
+        margin: 0 10px;
+    }
 
-        .socials li {
-            margin: 0 10px;
-        }
+    .socials a {
+        text-decoration: none;
+        color: #fff;
+        border: 1.1px solid white;
+        padding: 5px;
 
-        .socials a {
-            text-decoration: none;
-            color: #fff;
-            border: 1.1px solid white;
-            padding: 5px;
+        border-radius: 50%;
 
-            border-radius: 50%;
+    }
 
-        }
-
-        .socials a i {
-            font-size: 1.1rem;
-            width: 20px;
+    .socials a i {
+        font-size: 1.1rem;
+        width: 20px;
 
 
-            transition: color .4s ease;
+        transition: color .4s ease;
 
-        }
+    }
 
-        .socials a:hover i {
-            color: aqua;
-        }
+    .socials a:hover i {
+        color: aqua;
+    }
 
-        .footer-bottom {
-            background: #111;
-            padding: 20px;
-            text-align: center;
-        }
+    .footer-bottom {
+        background: #111;
+        padding: 20px;
+        text-align: center;
+    }
 
-        .footer-bottom p {
-            float: left;
-            font-size: 14px;
-            word-spacing: 2px;
-            text-transform: capitalize;
-        }
+    .footer-bottom p {
+        float: left;
+        font-size: 14px;
+        word-spacing: 2px;
+        text-transform: capitalize;
+    }
 
-        .footer-bottom p a {
-            color: #44bae8;
-            font-size: 16px;
-            text-decoration: none;
-        }
+    .footer-bottom p a {
+        color: #44bae8;
+        font-size: 16px;
+        text-decoration: none;
+    }
 
-        .footer-bottom span {
-            text-transform: uppercase;
-            opacity: .4;
-            font-weight: 200;
-        }
+    .footer-bottom span {
+        text-transform: uppercase;
+        opacity: .4;
+        font-weight: 200;
+    }
 
-        .footer-menu {
-            float: right;
+    .footer-menu {
+        float: right;
 
-        }
+    }
 
+    .footer-menu ul {
+        display: flex;
+    }
+
+    .footer-menu ul li {
+        padding-right: 10px;
+        display: block;
+    }
+
+    .footer-menu ul li a {
+        color: #cfd2d6;
+        text-decoration: none;
+    }
+
+    .footer-menu ul li a:hover {
+        color: #27bcda;
+    }
+
+    @media (max-width:500px) {
         .footer-menu ul {
             display: flex;
+            margin-top: 10px;
+            margin-bottom: 20px;
         }
+    }
+</style>
+<footer>
+    <div class="footer-content">
+        <h3>PGGEEKS Developer</h3>
+        <p>aka Parth Gujral made with Django and with the help of channels/websockets. Capable of real time stock
+            prices and multithreading and more. about this web app on my github pggeeks check from the link below
+        </p>
+        <ul class="socials">
+            <li><a href="https://github.com/Pggeeks/"><i class="fa fa-github"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+            <li><a href="https://www.youtube.com/c/DoctorPotato"><i class="fa fa-youtube"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+        </ul>
+    </div>
+    <div class="footer-bottom">
+        <p>copyright &copy; <a href="#">Parth Gujral</a> </p>
+    </div>
 
-        .footer-menu ul li {
-            padding-right: 10px;
-            display: block;
-        }
-
-        .footer-menu ul li a {
-            color: #cfd2d6;
-            text-decoration: none;
-        }
-
-        .footer-menu ul li a:hover {
-            color: #27bcda;
-        }
-
-        @media (max-width:500px) {
-            .footer-menu ul {
-                display: flex;
-                margin-top: 10px;
-                margin-bottom: 20px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <footer>
-        <div class="footer-content">
-            <h3>PGGEEKS Developer</h3>
-            <p>aka Parth Gujral made with Django and with the help of channels/websockets. Capable of real time stock
-                prices and multithreading and more. about this web app on my github pggeeks check from the link below
-            </p>
-            <ul class="socials">
-                <li><a href="https://github.com/Pggeeks/"><i class="fa fa-github"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                <li><a href="https://www.youtube.com/c/DoctorPotato"><i class="fa fa-youtube"></i></a></li>
-                <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
-            </ul>
-        </div>
-        <div class="footer-bottom">
-            <p>copyright &copy; <a href="#">Parth Gujral</a> </p>
-        </div>
-
-    </footer>
-</body>
-
-</html>
+</footer>

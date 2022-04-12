@@ -74,24 +74,30 @@ TEMPLATES = [
     },
 ]
 
-CHANNEL_LAYERS = {
-    'default': {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    },
-}
-# if you havr redis use this settings 
 # CHANNEL_LAYERS = {
 #     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             "hosts": [('127.0.0.1',6379)],
-#             "capacity": 1500,  # default 100
-#             "expiry": 10, 
-#         },
+#         "BACKEND": "channels.layers.InMemoryChannelLayer"
 #     },
 # }
-# Database 
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+import redis
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis://:iTuBP8SpJsKoc9d0jCNpCeisputLlNqp@redis-17223.c212.ap-south-1-1.ec2.cloud.redislabs.com:17223/0')],
+            "capacity": 1500,  # default 100
+            "expiry": 10, 
+        },
+    },
+}
+
+BROKER_URL ='redis://:iTuBP8SpJsKoc9d0jCNpCeisputLlNqp@redis-17223.c212.ap-south-1-1.ec2.cloud.redislabs.com:17223'
+CELERY_RESULT_BACKEND = 'redis://:iTuBP8SpJsKoc9d0jCNpCeisputLlNqp@redis-17223.c212.ap-south-1-1.ec2.cloud.redislabs.com:17223'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Calcutta'
+
 
 # DATABASES = {
 # 'default': {

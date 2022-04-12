@@ -57,20 +57,19 @@
         --darkreader-selection-text: #e8e6e3;
     }
     html {
-        background-color: #111 !important;
         zoom: 110%;
         
         
     }
 
-    html,
+    /* html,
     body,
     input,
     textarea,
     select,
     button {
         background-color: #181a1b;
-    }
+    } */
 
     html,
     body,

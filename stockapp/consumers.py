@@ -4,7 +4,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from .views import *
 class StockConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_name = self.scope['url_route']['kwargs']['StockName']
         self.StockName =self.scope['url_route']['kwargs']['StockName']
         self.room_group_name = self.StockName
 

@@ -5,5 +5,5 @@ from . import consumers
 
 websocket_urlpatterns = [
     re_path(r'ws/Home', consumers.AllStockConsumer.as_asgi()),
-    re_path(r'ws/stock/(?P<StockName>\w+)/(?P<room_name>\w+)/$', consumers.StockConsumer.as_asgi()),
+    re_path(r'ws/stock/(?P<StockName>\w+)/$', consumers.StockConsumer.as_asgi()),
 ]
