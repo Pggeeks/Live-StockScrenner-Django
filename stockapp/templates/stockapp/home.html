@@ -1,3 +1,5 @@
+{% load static %}
+{% load dict_key %}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
 
@@ -7,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@1,200&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta content="width=device-width, initial-scale=1" name="viewport" />
-{% load static %}
 <!--  css file main.css -->
 <link href="{% static 'css/main.css' %}" rel="stylesheet">
 <script src="{% static 'js/home.js' %}">  </script>
@@ -17,120 +18,105 @@
 
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet"
     type="text/css" />
-{% load dict_key %}
-</head>
 </script>
-<body class="light-mode">
-    <app-root _nghost-nuh-c31="" ng-version="12.2.2">
-        <app-header _ngcontent-nuh-c31="" _nghost-nuh-c30="">
-            <header _ngcontent-nuh-c30="" class="light-bb">
-                <nav id='top-nav' class="navbar navbar-light bg-light">
-                    <div class="container-fluid">
-                        <div style="display: flex; align-items: center;">
-                            <img src="{% static 'images/sto.png' %}" alt="" id="nav-image"
-                                class="d-inline-block align-text-top">
-                            <span id="nav-title">Stock Screnner Live</span>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-        </app-header>
-        <!-- navbar ended -->
-        <!-- bootstrap search bar -->
-        <div class="searchbar" class="ui-widget">
-            <h4 id='searchtitle'>Search By Symbol or Name</h4>
-            <nav class='searchnav' class="navbar navbar-light bg-light">
-                <div class="container-fluid searchnav">
-                    <form class="d-flex" action="">
-                        <input class="form-control me-2" id="tags" type="text" placeholder=" Reliance Industries"
-                            aria-label="Search">
-                    </form>
-                </div>
-            </nav>
+{% include 'stockapp/navbar.html' %}
+</head>
+<!-- navbar ended -->
+<!-- bootstrap search bar -->
+<div class="searchbar" class="ui-widget">
+    <h4 id='searchtitle'>Search By Symbol or Name</h4>
+    <nav class='searchnav' class="navbar navbar-light bg-light">
+        <div class="container-fluid searchnav">
+            <form class="d-flex" action="">
+                <input class="form-control me-2" id="tags" type="text" placeholder=" Reliance Industries"
+                    aria-label="Search">
+            </form>
         </div>
-        <!--  -->
-        <p style="text-align: center; font-size: 0.8rem;"> * Prices are updated every 15 seconds with websockets</p>
+    </nav>
+</div>
+<!--  -->
+<p style="text-align: center; font-size: 0.8rem;"> * Prices are updated every 15 seconds with websockets</p>
 
-        <!-- ★ -->
-        <!-- nifty and bank nifty cards -->
+<!-- ★ -->
+<!-- nifty and bank nifty cards -->
 
-        <div id="nifty-cards">
-            <!--  -->
-                </div>
-    
-        <!-- ethereium above details -->
-        <app-markets-list _ngcontent-nuh-c19="" _nghost-nuh-c18="">
+<div id="nifty-cards">
+    <!--  -->
+</div>
 
-            <div _ngcontent-nuh-c18="" class="markets pb30">
-                <div _ngcontent-nuh-c18="" class="container-fluid">
-                    <div _ngcontent-nuh-c18="" class="row">
-                        <div _ngcontent-nuh-c18="" class="col-md-12">
-                            <div _ngcontent-nuh-c18="" class="markets-pair-list">
+<!-- ethereium above details -->
+<app-markets-list _ngcontent-nuh-c19="" _nghost-nuh-c18="">
 
-                                <div _ngcontent-nuh-c18="" id="myTabContent" class="tab-content">
-                                    <div _ngcontent-nuh-c18="" id="favorites" role="tabpanel"
-                                        aria-labelledby="favorites-id" class="tab-pane fade">
-                                        <div _ngcontent-nuh-c18="" class="table-responsive">
-                                            <table _ngcontent-nuh-c18="" class="table star-active">
-                                                <thead _ngcontent-nuh-c18="">
-                                                    <tr _ngcontent-nuh-c18="">
-                                                        <th _ngcontent-nuh-c18="">Pairs</th>
-                                                        <th _ngcontent-nuh-c18="">Coin</th>
-                                                        <th _ngcontent-nuh-c18="">Last Price</th>
-                                                        <th _ngcontent-nuh-c18="">Change (24H)</th>
-                                                        <th _ngcontent-nuh-c18="">High (24H)</th>
-                                                        <th _ngcontent-nuh-c18="">Low (24h)</th>
-                                                        <th _ngcontent-nuh-c18="">Volume (24h)</th>
-                                                    </tr>
-                                                </thead>
-                    
-                                                       
-                                                    </tr>
+    <div _ngcontent-nuh-c18="" class="markets pb30">
+        <div _ngcontent-nuh-c18="" class="container-fluid">
+            <div _ngcontent-nuh-c18="" class="row">
+                <div _ngcontent-nuh-c18="" class="col-md-12">
+                    <div _ngcontent-nuh-c18="" class="markets-pair-list">
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div _ngcontent-nuh-c18=""  role="tabpanel" aria-labelledby="btc-id"
-                                        class="tab-pane fade show active">
-                                        <div _ngcontent-nuh-c18="" class="table-responsive">
-                                            <table _ngcontent-nuh-c18="" class="table">
-                                                <thead _ngcontent-nuh-c18="">
-                                                    <tr _ngcontent-nuh-c18="">
-                                                        <th _ngcontent-nuh-c18="">Pairs</th>
-                                                        <th _ngcontent-nuh-c18="">Last Price</th>
-                                                        <th _ngcontent-nuh-c18="">Change (24H)</th>
-                                                        <th _ngcontent-nuh-c18="">High (24H)</th>
-                                                        <th _ngcontent-nuh-c18="">Low (24h)</th>
-                                                        <th _ngcontent-nuh-c18="">Volume (24h)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="stocklistmain" class="load">
+                        <div _ngcontent-nuh-c18="" id="myTabContent" class="tab-content">
+                            <div _ngcontent-nuh-c18="" id="favorites" role="tabpanel" aria-labelledby="favorites-id"
+                                class="tab-pane fade">
+                                <div _ngcontent-nuh-c18="" class="table-responsive">
+                                    <table _ngcontent-nuh-c18="" class="table star-active">
+                                        <thead _ngcontent-nuh-c18="">
+                                            <tr _ngcontent-nuh-c18="">
+                                                <th _ngcontent-nuh-c18="">Pairs</th>
+                                                <th _ngcontent-nuh-c18="">Coin</th>
+                                                <th _ngcontent-nuh-c18="">Last Price</th>
+                                                <th _ngcontent-nuh-c18="">Change (24H)</th>
+                                                <th _ngcontent-nuh-c18="">High (24H)</th>
+                                                <th _ngcontent-nuh-c18="">Low (24h)</th>
+                                                <th _ngcontent-nuh-c18="">Volume (24h)</th>
+                                            </tr>
+                                        </thead>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
                                 </div>
-
+                            </div>
+                            <div _ngcontent-nuh-c18="" role="tabpanel" aria-labelledby="btc-id"
+                                class="tab-pane fade show active">
+                                <div _ngcontent-nuh-c18="" class="table-responsive">
+                                    <table _ngcontent-nuh-c18="" class="table">
+                                        <thead _ngcontent-nuh-c18="">
+                                            <tr _ngcontent-nuh-c18="">
+                                                <th _ngcontent-nuh-c18="">Pairs</th>
+                                                <th _ngcontent-nuh-c18="">Last Price</th>
+                                                <th _ngcontent-nuh-c18="">Change (24H)</th>
+                                                <th _ngcontent-nuh-c18="">High (24H)</th>
+                                                <th _ngcontent-nuh-c18="">Low (24h)</th>
+                                                <th _ngcontent-nuh-c18="">Volume (24h)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="stocklistmain" class="load">
+                                            <!-- show loading when ajax is processing -->
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
-                <input type="hidden" id="refreshed" value="no">
-        </app-markets-list>
-        </app-markets>
+            </div>
+        </div>
+        <input type="hidden" id="refreshed" value="no">
+</app-markets-list>
+</app-markets>
 
-        <!---->
-    </app-root>
-    <script src="runtime.7855c3947dcbda023611.js" defer=""></script>
-    <script src="polyfills.3eee805b0d63b0c84029.js" defer=""></script>
-    <script src="main.6803360a95acc17d6c60.js" defer=""></script>
+<!---->
+</app-root>
+<script src="runtime.7855c3947dcbda023611.js" defer=""></script>
+<script src="polyfills.3eee805b0d63b0c84029.js" defer=""></script>
+<script src="main.6803360a95acc17d6c60.js" defer=""></script>
 
 
 
-    <!-- home.js contain socket connection -->
-    <!-- {% include 'stockapp/footer.html' %}    -->
+<!-- home.js contain socket connection -->
+{% include 'stockapp/footer.html' %}
 </body>
 <hr>
 <!-- Footer here!! -->

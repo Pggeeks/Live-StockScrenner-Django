@@ -1,12 +1,8 @@
 import json
 import time
 from threading import Event, Thread
-from typing import List
 
-from django.http import HttpResponse, JsonResponse
-from h11 import Data
-
-from .task import file_transfer
+from django.http import JsonResponse
 import requests
 from asgiref.sync import async_to_sync
 from bs4 import BeautifulSoup
@@ -16,8 +12,6 @@ from django.views import View
 from nsetools import Nse
 
 nse = Nse()
-
-
 class Home(View):
     def get(self, request):
         global stop_event

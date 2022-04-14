@@ -1,17 +1,25 @@
-
+if(performance.navigation.type == 2){
+    location.reload(true);
+ }
+// reload page on backword and forword
+//  
+$(document).ready(function(){
 const socket = new WebSocket(
     'ws://' + window.location.host + '/ws'+'/'+ 'Home' + '/'
     );
     socket.onmessage = function (e) {
         Data=JSON.parse(e.data) // get json object from backend (wesockets)
+        console.log(Data.nifty50.lastPrice)
         // updating nifty50 and nifty bank
-        // console.log(Data.niftyBank.lastPrice)
+        // console.log(Data.nifty50.pChange)
         var N50 = document.getElementById(Data.nifty50.name)
-        // N50.innerHTML = '₹'+Data.nifty50.lastPrice
+        N50.innerHTML = Data.nifty50.lastPrice
         var chng = document.getElementById(Data.nifty50.name+'change')
         var chngb = document.getElementById(Data.niftyBank.name+'change')
-        chng.innerHTML = Data.nifty50.pChange + '%'
+        // chng.innerHTML = Data.nifty50.pChange + '%'
+        // chngb.innerHTML = Data.niftyBank.pChange + '%'
         var NBNK = document.getElementById(Data.niftyBank.name)
+        NBNK.innerHTML = Data.niftyBank.lastPrice
         document.getElementById(Data.niftyBank.name+'change').innerHTML =Data.niftyBank.pChange +'%'
         if ( Data.nifty50.pChange.toString().indexOf('-')===0) {
             chng.innerHTML = Data.nifty50.pChange+'%' // add change in price from json obj 
@@ -25,7 +33,7 @@ const socket = new WebSocket(
                 chng.classList.add('green');
             }
         if ( Data.niftyBank.pChange.toString().indexOf('-')===0) {
-            chng.innerHTML = Data.niftyBank.pChange+'%' // add change in price from json obj 
+            chngb.innerHTML = Data.niftyBank.pChange+'%' // add change in price from json obj 
             NBNK.classList.add('red');
             chngb.classList.add('red');
             // changed.classList.add('red');
@@ -36,7 +44,7 @@ const socket = new WebSocket(
                 chngb.classList.add('green');
             }
         //  other stocks top list
-        console.log(Data.message['symbol'])
+        // console.log(Data.message['symbol'])
         var Cmp = document.getElementById(Data.message['symbol'])
         var changed = document.getElementById(Data.message['symbol']+'change') 
         Cmp.innerHTML = '₹'+Data.message['lastPrice'] // add CMP from json obj
@@ -50,21 +58,17 @@ const socket = new WebSocket(
             Cmp.classList.add('green');
             changed.classList.add('green');
         }}
-        // reload on page back 
-        window.addEventListener( "pageshow", function ( event ) {
-    var historyTraversal = event.persisted || 
-                         ( typeof window.performance != "undefined" && 
-                              window.performance.navigation.type === 2 );
-    if ( historyTraversal ) {
-    // Handle page restore.
-    window.location.reload();
-    }
-    });
-    // disable page forword
-    $( document ).ready( function(){
-    history.pushState(null,  document.title, location.href);        
     });
 
+
+// loader
+
+var spinner =`
+<div id='loading'>
+<div class="spinner-border" role="status">
+<div class="sr-only">Loading...</div>
+</div>
+</div>`
 
     $.ajax(
         {
@@ -96,6 +100,7 @@ const socket = new WebSocket(
         }
 });
 // adding nifty 50 and nifty bank using ajax request //
+$(document).ready(function(){
 $.ajax({
     type:"GET",
         url: "ajax/get-nifty",
@@ -119,23 +124,31 @@ $.ajax({
                     </div>
                 `;
         }
+})
 });
+$(document).ready(function(){
     $.ajax({
         type:"GET",
         url: "ajax/get-topstocks",
-        success: function(e) 
-        {
-            // making html through ajax updating inputs through websockets
+        // show loading when ajax is processing
+        beforeSend: function(){
+            $('.load').html(spinner);
+        },
+        complete:function(){
+            $('#loading').remove();
+        },
+        
+        success: function(e){
+                // making html through ajax updating inputs through websockets
             for (var i=0; i < Object.keys(e).length; i++) {
-
                 if ( e[i].pChange.toString().indexOf('-')===0) {
                     document.getElementById('stocklistmain').innerHTML +=`
                     <tr _ngcontent-nuh-c18="" id="stocklist">
                     <td _ngcontent-nuh-c18=""><i _ngcontent-nuh-c18=""
-                                                            class="icon ion-md-star"></i> <a style="color: black;" href="stock\\${e[i].symbol}">${e[i].symbol}</a></td>
-                                                    <td _ngcontent-nuh-c18="" id="${e[i].symbol}"" class="red">
-                                                        ₹${e[i].lastPrice}</td>
-                                                    <td _ngcontent-nuh-c18="" id="${e[i].symbol}change"
+                    class="icon ion-md-star"></i> <a style="color: black;" href="stock\\${e[i].symbol}">${e[i].symbol}</a></td>
+                    <td _ngcontent-nuh-c18="" id="${e[i].symbol}"" class="red">
+                    ₹${e[i].lastPrice}</td>
+                    <td _ngcontent-nuh-c18="" id="${e[i].symbol}change"
                                                         class='red'>${e[i].pChange}%</td>
                                                    
                                                     <td _ngcontent-nuh-c18="">${e[i].dayHigh}</td>
@@ -148,9 +161,9 @@ $.ajax({
                     document.getElementById('stocklistmain').innerHTML +=`
                     <tr _ngcontent-nuh-c18="" id="stocklist">
                     <td _ngcontent-nuh-c18=""><i _ngcontent-nuh-c18=""
-                                                            class="icon ion-md-star"></i> <a style="color: black;" href="stock\\${e[i].symbol}">${e[i].symbol}</a></td>
-                                                    <td _ngcontent-nuh-c18="" id="${e[i].symbol}"" class="green">
-                                                        ₹${e[i].lastPrice}</td>
+                    class="icon ion-md-star"></i> <a style="color: black;" href="stock\\${e[i].symbol}">${e[i].symbol}</a></td>
+                    <td _ngcontent-nuh-c18="" id="${e[i].symbol}"" class="green">
+                    ₹${e[i].lastPrice}</td>
                                                     <td _ngcontent-nuh-c18="" id="${e[i].symbol}change"
                                                         class='green'>+${e[i].pChange}%</td>
                                                     <td _ngcontent-nuh-c18="">${e[i].dayHigh}</td>
@@ -159,7 +172,8 @@ $.ajax({
                                                 </tr>
                                                 `
                 }
-        }}
-    });
+            }}
+    })
+});
     
     

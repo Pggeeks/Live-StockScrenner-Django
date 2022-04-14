@@ -1,4 +1,9 @@
-
+if(performance.navigation.type == 2){
+    location.reload(true);
+ }
+// reload page on backword and forword
+//  
+$(document).ready(function(){
 const socket = new WebSocket(
     'ws://' + window.location.host + '/ws'+'/'+ 'Home' + '/'
     );
@@ -53,26 +58,18 @@ const socket = new WebSocket(
             Cmp.classList.add('green');
             changed.classList.add('green');
         }}
-        // reload on page back 
-        window.addEventListener( "pageshow", function ( event ) {
-    var historyTraversal = event.persisted || 
-                         ( typeof window.performance != "undefined" && 
-                              window.performance.navigation.type === 2 );
-    if ( historyTraversal ) {
-    // Handle page restore.
-    window.location.reload();
-    }
     });
-    // disable page forword
-    $( document ).ready( function(){
-    history.pushState(null,  document.title, location.href);        
-    });
+
 
 // loader
 
-var spinner =`<div class="spinner-border" role="status">
+var spinner =`
+<div id='loading'>
+<div class="spinner-border" role="status">
 <div class="sr-only">Loading...</div>
+</div>
 </div>`
+
     $.ajax(
         {
         type:"GET",
@@ -103,6 +100,7 @@ var spinner =`<div class="spinner-border" role="status">
         }
 });
 // adding nifty 50 and nifty bank using ajax request //
+$(document).ready(function(){
 $.ajax({
     type:"GET",
         url: "ajax/get-nifty",
@@ -126,18 +124,20 @@ $.ajax({
                     </div>
                 `;
         }
+})
 });
 $(document).ready(function(){
     $.ajax({
         type:"GET",
         url: "ajax/get-topstocks",
-        // setting a timeout
+        // show loading when ajax is processing
         beforeSend: function(){
             $('.load').html(spinner);
         },
         complete:function(){
-            // $('.spinner-border').remove();
+            $('#loading').remove();
         },
+        
         success: function(e){
                 // making html through ajax updating inputs through websockets
             for (var i=0; i < Object.keys(e).length; i++) {
