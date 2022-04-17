@@ -4,9 +4,8 @@ if (performance.navigation.type == 2) {
 }
 //  getting stockname from django template
 var Data_From_Template = JSON.parse(document.getElementById('StockName').textContent);
-console.log(Data_From_Template);
 const socket = new WebSocket(
-  'ws://' + window.location.host + '/ws/stock/' + Data_From_Template + '/'
+  'wss://' + window.location.host + '/ws/stock/' + Data_From_Template + '/'
 );
 socket.onmessage = function (e) {
   // directly setting inputs through web sockets

@@ -5,7 +5,7 @@ if(performance.navigation.type == 2){
 //  
 $(document).ready(function(){
 const socket = new WebSocket(
-    'ws://' + window.location.host + '/ws'+'/'+ 'Home' + '/'
+    'wss://' + window.location.host + '/ws'+'/'+ 'Home' + '/'
     );
     socket.onmessage = function (e) {
         Data=JSON.parse(e.data) // get json object from backend (wesockets)

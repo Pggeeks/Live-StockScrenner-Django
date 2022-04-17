@@ -1,7 +1,7 @@
 import json
 import time
 from threading import Event, Thread
-
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import requests
 from asgiref.sync import async_to_sync
@@ -106,10 +106,9 @@ def get_topstocks(data):
              "ICICIBANK": "ICICI BANK", "TCS": "TATA CONSULTANCY SERVICES", "LT": "LARSEN & TOUBRO LTD"}
     Data = [nse.get_quote(i) for i in a]
     return JsonResponse(Data,safe=False,encoder=json.JSONEncoder)
-
+@csrf_exempt
 def Get_SelectedStock(request):
     Name = request.POST.get('Name')
-    nseQuote = nse.get_quote(Name)
     url = f"https://www.screener.in/company/{Name}/consolidated/"
     result = requests.get(url).text
         # '<div class="sub show-more-box about" style="flex-basis: 100px">'
