@@ -28,7 +28,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = False
 #  the app is full production ready
 
-ALLOWED_HOSTS = ['https://django-stock-screnner.herokuapp.com/',]
+ALLOWED_HOSTS = ['django-stock-screnner.herokuapp.com',]
 
 
 # Application definition
