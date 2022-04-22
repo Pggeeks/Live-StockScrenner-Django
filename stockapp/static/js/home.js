@@ -1,15 +1,13 @@
 if(performance.navigation.type == 2){
     location.reload(true);
  }
-// reload page on backword and forword
-//  
 $(document).ready(function(){
 const socket = new WebSocket(
-    'wss://' + window.location.host + '/ws'+'/'+ 'Home' + '/'
+    'ws://' + window.location.host + '/ws'+'/'+ 'Home' + '/'
     );
     socket.onmessage = function (e) {
         Data=JSON.parse(e.data) // get json object from backend (wesockets)
-        console.log(Data.nifty50.lastPrice)
+        // console.log(Data.nifty50.lastPrice)
         // updating nifty50 and nifty bank
         // console.log(Data.nifty50.pChange)
         var N50 = document.getElementById(Data.nifty50.name)
